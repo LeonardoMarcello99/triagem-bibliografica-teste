@@ -614,7 +614,14 @@ with tab4:
             st.warning('Selecione pelo menos uma coluna para exportar.')
         else:
             output=export_df[selected_columns].rename(columns=column_names)
-            st.dataframe(output.head(10),use_container_width=True,hide_index=True)
+            # Pré-visualização completa com rolagem vertical e horizontal.
+            # A altura limitada evita que coleções grandes estiquem a página.
+            st.dataframe(
+                output,
+                use_container_width=True,
+                hide_index=True,
+                height=420,
+            )
             st.download_button(
                 'Exportar Excel com filtros',
                 data=to_excel(output),
