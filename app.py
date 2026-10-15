@@ -57,7 +57,7 @@ def to_excel(df):
         df.to_excel(writer,index=False,sheet_name='Triagem')
     return out.getvalue()
 
-st.set_page_config(page_title='LitScope | Revisão Científica', page_icon=str(Path(__file__).parent / 'favicon.png'), layout='wide')
+st.set_page_config(page_title='LitScope | Revisão Científica', page_icon=str(Path(__file__).parent / 'favicon.png'), layout='wide', initial_sidebar_state='expanded')
 
 # Personalização visual da aplicação local: tema claro e cor institucional.
 # A barra técnica do Streamlit é escondida na interface, sem controle de acesso.
@@ -121,6 +121,30 @@ st.markdown("""
     color: #17324A !important;
   }
   [data-testid="stWidgetLabel"] { color: #17324A !important; }
+
+  /* Botão nativo para reabrir a barra lateral após recolhê-la. */
+  [data-testid="stSidebarCollapsedControl"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 999999 !important;
+  }
+  [data-testid="stSidebarCollapsedControl"] button {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #17324A !important;
+    background-color: #F0F7FC !important;
+    border: 1px solid #B5CEDF !important;
+    border-radius: 8px !important;
+  }
+  [data-testid="stSidebarCollapsedControl"] button svg {
+    color: #17324A !important;
+    stroke: #17324A !important;
+  }
+  [data-testid="stSidebar"] button[data-testid="stSidebarCollapseButton"] {
+    color: #17324A !important;
+  }
 
   .stButton > button[kind="primary"],
   .stDownloadButton > button[kind="primary"],
