@@ -63,7 +63,6 @@ st.set_page_config(page_title='LitScope | Revisão Científica', page_icon=str(P
 # A barra técnica do Streamlit é escondida na interface, sem controle de acesso.
 st.markdown("""
 <style>
-  [data-testid="stToolbar"],
   [data-testid="stDecoration"],
   [data-testid="stStatusWidget"],
   #MainMenu,
@@ -122,6 +121,20 @@ st.markdown("""
   }
   [data-testid="stWidgetLabel"] { color: #17324A !important; }
 
+  /* A barra superior deve permanecer montada: nela o Streamlit
+     disponibiliza controles para reabrir a sidebar em diferentes versões. */
+  [data-testid="stHeader"], [data-testid="stToolbar"] {
+    visibility: visible !important;
+    display: flex !important;
+  }
+  [data-testid="stHeader"] {
+    background-color: #FFFFFF !important;
+  }
+  [data-testid="stHeader"] button,
+  [data-testid="stToolbar"] button {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
   /* Botão nativo para reabrir a barra lateral após recolhê-la. */
   [data-testid="stSidebarCollapsedControl"] {
     display: flex !important;
