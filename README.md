@@ -12,13 +12,6 @@ Aplicação Streamlit de apoio à pesquisa bibliográfica, baseada na versão pr
 - **Backup e restauração de dados:** estatísticas, exportação RIS/CSV com seleção manual de artigos, backup JSON e restauração de coleções.
 - **Triagem e Extração de dados:** exibem **Em desenvolvimento**. Não fazem chamadas de IA.
 
-## Hospedagem com Streamlit Community Cloud
-
-1. Extraia o ZIP e coloque **os arquivos desta pasta na raiz do repositório** GitHub, incluindo `.streamlit/config.toml` e `favicon.png`.
-2. Abra [share.streamlit.io](https://share.streamlit.io) e conecte seu repositório.
-3. Selecione `app.py` como arquivo principal e faça o deploy.
-4. Para execução local, use `python -m pip install -r requirements.txt` e `streamlit run app.py`.
-
 ## Dados e privacidade
 
 Esta versão é destinada a **testes temporários com poucas pessoas**, sem cadastro ou autenticação. Cada sessão recebe um **banco SQLite separado**, evitando acesso direto às coleções de outros visitantes. Não há persistência garantida: dados podem desaparecer após reinício, limpeza da hospedagem ou término da sessão. **Exporte RIS/CSV/Excel ou faça backup JSON antes de sair.** A restauração é feita na guia Backup e restauração de dados.
