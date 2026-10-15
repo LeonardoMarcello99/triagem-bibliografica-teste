@@ -57,7 +57,7 @@ def _normalize(record, source, number):
         uid = f'{source.upper()}:HASH:{hashlib.sha256((title.lower()+str(record.get("year", ""))).encode()).hexdigest()[:24]}'
     return dict(pmid=uid, title=title, abstract=str(record.get('abstract') or ''),
                 year=str(record.get('year') or ''), journal=str(record.get('journal') or ''),
-                doi=doi, url=str(record.get('url') or (f'https://doi.org/{doi}' if doi else '')),
+                doi=doi, authors=str(record.get('authors') or ''), url=str(record.get('url') or (f'https://doi.org/{doi}' if doi else '')),
                 source=source, source_id=external or pmid or uid)
 
 
@@ -94,6 +94,7 @@ def search_embase(query, limit, api_key, insttoken=''):
             year=re.search(r'\b(?:19|20)\d{2}\b',pubdate)
             record=_normalize(dict(title=title,abstract=abstract,year=year.group() if year else '',
                          journal=_text(entry.get('prism:publicationName')),doi=_text(entry.get('prism:doi')),
+                         authors=_text(entry.get('dc:creator') or entry.get('author')),
                          external_id=accession,url=_text(entry.get('prism:url'))), 'Embase',len(result))
             if record:
                 result.append(record)
@@ -128,6 +129,7 @@ def parse_ris(content,source):
         match=re.search(r'\b(?:19|20)\d{2}\b',year)
         rows.append(_normalize(dict(title=get('TI','T1','CT'),abstract=' '.join(e.get('AB',[]) or e.get('N2',[])),
                     year=match.group() if match else '',journal=get('JO','JF','T2'),doi=get('DO'),
+                    authors='; '.join(e.get('AU',[]) or e.get('A1',[])),
                     external_id=get('AN','ID','CN'),url=get('UR')),source,i))
     return [r for r in rows if r]
 
@@ -148,7 +150,7 @@ def parse_csv(content,source):
         record=_normalize(dict(title=get(r,'title','article title','titulo','título','ti'),
             abstract=get(r,'abstract','resumo','ab'),year=get(r,'year','publication year','ano','py'),
             journal=get(r,'journal','source','publication title','periódico','periodico'),
-            doi=get(r,'doi'),external_id=get(r,'accession number','accession','id','record id','an'),
+            doi=get(r,'doi'),authors=get(r,'authors','author','autores','autor','au'),external_id=get(r,'accession number','accession','id','record id','an'),
             pubmed_id=get(r,'pmid','pubmed id'),url=get(r,'url','link')),source,i)
         if record:rows.append(record)
     return rows
@@ -190,6 +192,7 @@ def parse_nbib(content, source='PubMed'):
         pmid=get('PMID')
         record=_normalize(dict(title=get('TI'), abstract=' '.join(e.get('AB',[])),
             year=found.group() if found else '',journal=get('JT','TA'),doi=doi,
+            authors='; '.join(e.get('FAU',[]) or e.get('AU',[])),
             pubmed_id=pmid,external_id=pmid,
             url=f'https://pubmed.ncbi.nlm.nih.gov/{pmid}/' if pmid else ''),source,i)
         if record:

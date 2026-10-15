@@ -42,9 +42,17 @@ def search_pubmed(query, limit=None, email=""):
                     doi = str(aid)
             pubdate = article.get("Journal", {}).get("JournalIssue", {}).get("PubDate", {})
             year = str(pubdate.get("Year", pubdate.get("MedlineDate", "")))
+            authors = []
+            for author in article.get('AuthorList', []):
+                collective = str(author.get('CollectiveName', '')).strip()
+                given = str(author.get('ForeName', '')).strip()
+                family = str(author.get('LastName', '')).strip()
+                full = collective or ' '.join(x for x in (given, family) if x)
+                if full:
+                    authors.append(full)
             result.append(dict(
                 pmid=pmid, title=_text(article.get("ArticleTitle", "")),
-                abstract=abstract_text, year=year,
+                abstract=abstract_text, year=year, authors='; '.join(authors),
                 journal=str(article.get("Journal", {}).get("Title", "")),
                 doi=doi, url=f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
             ))
