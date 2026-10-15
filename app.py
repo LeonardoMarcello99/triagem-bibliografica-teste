@@ -68,8 +68,60 @@ st.markdown("""
   [data-testid="stStatusWidget"],
   #MainMenu,
   footer { display: none !important; }
-  :root { color-scheme: light; }
-  .stApp { background-color: #FFFFFF; }
+  :root {
+    color-scheme: light !important;
+    --background-color: #FFFFFF;
+    --secondary-background-color: #F0F7FC;
+    --text-color: #17324A;
+    --primary-color: #0086D9;
+  }
+  html, body, [data-testid="stAppViewContainer"], .stApp,
+  [data-testid="stMain"], [data-testid="stMainBlockContainer"] {
+    background-color: #FFFFFF !important;
+    color: #17324A !important;
+  }
+  /* Força legibilidade mesmo se o visitante tiver preferência por modo escuro. */
+  [data-testid="stMain"] p, [data-testid="stMain"] label,
+  [data-testid="stMain"] h1, [data-testid="stMain"] h2,
+  [data-testid="stMain"] h3, [data-testid="stMain"] h4,
+  [data-testid="stMain"] span:not([data-baseweb="tag"] *),
+  [data-testid="stMain"] [data-testid="stMarkdownContainer"] {
+    color: #17324A;
+  }
+  [data-testid="stSidebar"], [data-testid="stSidebarContent"] {
+    background-color: #F0F7FC !important;
+    color: #17324A !important;
+  }
+  [data-testid="stSidebar"] p, [data-testid="stSidebar"] label,
+  [data-testid="stSidebar"] span { color: #17324A !important; }
+  div[data-baseweb="input"], div[data-baseweb="select"],
+  div[data-baseweb="textarea"], div[data-baseweb="base-input"],
+  [data-testid="stNumberInput"] input,
+  [data-testid="stTextInput"] input,
+  [data-testid="stTextArea"] textarea {
+    background-color: #F0F7FC !important;
+    color: #17324A !important;
+  }
+  input, textarea { color: #17324A !important; caret-color: #17324A !important; }
+  input::placeholder, textarea::placeholder { color: #64748B !important; opacity: 1; }
+  [data-baseweb="popover"], [role="listbox"], [role="option"] {
+    background-color: #FFFFFF !important;
+    color: #17324A !important;
+  }
+  [data-testid="stTabs"] [role="tab"] { color: #17324A !important; }
+  [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+    color: #0086D9 !important;
+    border-bottom-color: #0086D9 !important;
+  }
+  [data-testid="stDataFrame"], [data-testid="stTable"] {
+    background-color: #FFFFFF !important;
+  }
+  [data-testid="stExpander"] details, [data-testid="stExpander"] summary {
+    background-color: #F0F7FC !important;
+    color: #17324A !important;
+  }
+  [data-testid="stWidgetLabel"] { color: #17324A !important; }
+
   .stButton > button[kind="primary"],
   .stDownloadButton > button[kind="primary"],
   button[data-testid="stBaseButton-primary"] {
@@ -83,7 +135,12 @@ st.markdown("""
     background-color: #006FB5 !important;
     border-color: #006FB5 !important;
   }
-  a, a:visited { color: #0086D9; }
+  .stButton > button[kind="primary"] *,
+  .stDownloadButton > button[kind="primary"] *,
+  button[data-testid="stBaseButton-primary"] * {
+    color: #FFFFFF !important;
+  }
+  a, a:visited { color: #0086D9 !important; }
 </style>
 """, unsafe_allow_html=True)
 
